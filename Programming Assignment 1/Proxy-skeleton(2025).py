@@ -120,6 +120,8 @@ while True:
     # ProxyServer finds a cache hit
     # Send back response to client 
     # ~~~~ INSERT CODE ~~~~
+    for line in cachaData():
+      clientSocket.sendall(line.encode())
     # ~~~~ END CODE INSERT ~~~~
     cacheFile.close()
     print ('Sent to the client:')
@@ -130,6 +132,15 @@ while True:
     # Create a socket to connect to origin server
     # and store in originServerSocket
     # ~~~~ INSERT CODE ~~~~
+    originServerSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    # Parse URL in the request, then get target server's hostname and port
+    host = re.search(r'Host:\s*(.*)', message).group(1)  # Extract Host
+    serverPort = 80  # Default HTTP port  
+
+    # Connect to the origin server
+    originServerSocket.connect((host, serverPort))
+    print('Connected to origin server:', host)
     # ~~~~ END CODE INSERT ~~~~
 
     print ('Connecting to:\t\t' + hostname + '\n')
@@ -183,6 +194,7 @@ while True:
 
       # Save origin server response in the cache file
       # ~~~~ INSERT CODE ~~~~
+
       # ~~~~ END CODE INSERT ~~~~
       cacheFile.close()
       print ('cache file closed')
