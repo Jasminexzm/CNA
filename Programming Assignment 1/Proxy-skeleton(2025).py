@@ -20,6 +20,9 @@ proxyPort = int(args.port)
 try:
   # Create a server socket
   # ~~~~ INSERT CODE ~~~~
+  serverPort = args.port
+  serverIP = args.hostname
+  serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   # ~~~~ END CODE INSERT ~~~~
   print ('Created socket')
 except:
@@ -29,6 +32,7 @@ except:
 try:
   # Bind the the server socket to a host and port
   # ~~~~ INSERT CODE ~~~~
+  serverSocket.bind(('',int(serverPort)))
   # ~~~~ END CODE INSERT ~~~~
   print ('Port is bound')
 except:
@@ -38,6 +42,7 @@ except:
 try:
   # Listen on the server socket
   # ~~~~ INSERT CODE ~~~~
+  serverSocket.listen(1)
   # ~~~~ END CODE INSERT ~~~~
   print ('Listening to socket')
 except:
